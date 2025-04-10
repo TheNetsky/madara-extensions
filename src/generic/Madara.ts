@@ -60,14 +60,13 @@ type Metadata = {
 
 export abstract class MadaraGeneric
     implements
-        Extension,
-        SearchResultsProviding,
-        MangaProviding,
-        ChapterProviding,
-        DiscoverSectionProviding,
-        SettingsFormProviding,
-        CloudflareBypassRequestProviding
-{
+    Extension,
+    SearchResultsProviding,
+    MangaProviding,
+    ChapterProviding,
+    DiscoverSectionProviding,
+    SettingsFormProviding,
+    CloudflareBypassRequestProviding {
     /**
      * The Madara URL of the website. Eg. https://webtoon.xyz
      */
@@ -684,7 +683,7 @@ export abstract class MadaraGeneric
             case 503:
                 throw new CloudflareError(
                     {
-                        url: this.bypassPage ? this.bypassPage : this.domain,
+                        url: response.url,
                         method: "GET",
                         headers: {
                             referer: `${this.domain}/`,
@@ -698,6 +697,10 @@ export abstract class MadaraGeneric
             case 404:
                 throw new Error(
                     `The requested page ${response.url} was not found!`,
+                );
+            case 429:
+                throw new Error(
+                    `Too many requests for ${response.url}!`,
                 );
         }
     }
