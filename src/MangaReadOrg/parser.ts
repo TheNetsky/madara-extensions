@@ -1,7 +1,7 @@
 import { MadaraParser } from "../generic/MadaraParser";
 
 export class MangaReadOrgParser extends MadaraParser {
-    override parseDate = (dateString: string) => {
+    override parseDate = (dateString: string): Date | undefined => {
         const [day, month, year] = dateString.split(".").map(Number);
 
         const parseDate = new Date(year, month - 1, day);
@@ -12,7 +12,7 @@ export class MangaReadOrgParser extends MadaraParser {
         const date: string = dateString.toUpperCase();
 
         if (date.includes("LESS THAN AN HOUR") || date.includes("JUST NOW")) {
-            return new Date();
+            return undefined;
         }
 
         if (date.includes("YESTERDAY")) {

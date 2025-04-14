@@ -1,11 +1,11 @@
 import { MadaraParser } from "../generic/MadaraParser";
 
 export class AzoraMoonParser extends MadaraParser {
-    override parseDate = (date: string): Date => {
+    override parseDate = (date: string): Date | undefined => {
         date = date.toUpperCase().trim();
 
         if (date.includes("قبل ساعة") || date.includes("الان")) {
-            return new Date();
+            return undefined;
         }
         if (date.includes("يومين")) {
             return new Date(Date.now() - 2 * 86400000);

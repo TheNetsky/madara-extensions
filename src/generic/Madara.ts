@@ -60,13 +60,14 @@ type Metadata = {
 
 export abstract class MadaraGeneric
     implements
-    Extension,
-    SearchResultsProviding,
-    MangaProviding,
-    ChapterProviding,
-    DiscoverSectionProviding,
-    SettingsFormProviding,
-    CloudflareBypassRequestProviding {
+        Extension,
+        SearchResultsProviding,
+        MangaProviding,
+        ChapterProviding,
+        DiscoverSectionProviding,
+        SettingsFormProviding,
+        CloudflareBypassRequestProviding
+{
     /**
      * The Madara URL of the website. Eg. https://webtoon.xyz
      */
@@ -699,9 +700,7 @@ export abstract class MadaraGeneric
                     `The requested page ${response.url} was not found!`,
                 );
             case 429:
-                throw new Error(
-                    `Too many requests for ${response.url}!`,
-                );
+                throw new Error(`Too many requests for ${response.url}!`);
         }
     }
 }

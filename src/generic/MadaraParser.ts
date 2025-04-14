@@ -160,7 +160,7 @@ export class MadaraParser {
             // make sure the chapter number is a number and not NaN
             chapNum = parseFloat(chapNum) ?? 0;
 
-            let mangaTime: Date;
+            let mangaTime: Date | undefined;
             const timeSelector = $(
                 "span.chapter-release-date > a, span.chapter-release-date > span.c-new-tag > a",
                 obj,
@@ -176,7 +176,7 @@ export class MadaraParser {
             }
 
             // Check if the date is a valid date, else return the current date
-            if (!mangaTime.getTime()) mangaTime = new Date();
+            if (!mangaTime || !mangaTime.getTime()) mangaTime = undefined;
 
             if (!id || typeof id === "undefined" || id === "#") {
                 console.log(
@@ -428,21 +428,21 @@ export class MadaraParser {
     ): Promise<string> {
         let image: string | undefined;
         const sources = [
-            'data-src',
-            'data-lazy-src',
-            'srcset',
-            'src',
-            'data-cfsrc'
+            "data-src",
+            "data-lazy-src",
+            "srcset",
+            "src",
+            "data-cfsrc",
         ];
 
         for (const attr of sources) {
             const val = imageObj?.attr(attr);
 
-            if (val == null || val.trim() === '') continue;
+            if (val == null || val.trim() === "") continue;
 
             // If it's srcset, extract the first URL
-            if (attr === 'srcset') {
-                image = val.split(',')[0]?.trim().split(' ')[0] ?? '';
+            if (attr === "srcset") {
+                image = val.split(",")[0]?.trim().split(" ")[0] ?? "";
             } else {
                 image = val;
             }
@@ -468,11 +468,11 @@ export class MadaraParser {
         return decodeURI(Application.decodeHTMLEntities(image ?? ""));
     }
 
-    parseDate = (date: string): Date => {
+    parseDate = (date: string): Date | undefined => {
         date = date.toUpperCase();
 
         if (date.includes("LESS THAN AN HOUR") || date.includes("JUST NOW")) {
-            return new Date();
+            return undefined;
         }
 
         if (date.includes("YESTERDAY")) {
