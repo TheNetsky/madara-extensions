@@ -46,7 +46,6 @@ export interface GenericParams {
     protectedChapterDataSelector?: string;
     chapterEndpoint?: number;
     chapterDetailsSelector?: string;
-    bypassPage?: string;
     useListParameter?: boolean;
     directoryPath?: string;
     parser?: MadaraParser;
@@ -140,11 +139,6 @@ export abstract class MadaraGeneric
     readonly chapterDetailsSelector: string;
 
     /**
-     * Some websites have the Cloudflare defense check enabled on specific parts of the website, these need to be loaded when using the Cloudflare bypass within the app
-     */
-    readonly bypassPage: string;
-
-    /**
      * THe directory path is need to fetch Discovery Sections, however it mostly done automatically, set this when the parser fails!
      */
     readonly directoryPath: string;
@@ -178,7 +172,6 @@ export abstract class MadaraGeneric
         this.chapterEndpoint = params.chapterEndpoint ?? 3;
         this.chapterDetailsSelector =
             params.chapterDetailsSelector ?? "div.page-break > img";
-        this.bypassPage = params.bypassPage ?? "";
         this.directoryPath = params.directoryPath ?? "";
         this.useListParameter = params.useListParameter ?? true;
         this.parser = params.parser ?? new MadaraParser();

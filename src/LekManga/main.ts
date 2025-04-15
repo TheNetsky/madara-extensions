@@ -13,7 +13,6 @@ class LekMangaExtension extends MadaraGeneric {
             language: pbconfig.language,
             usePostIds: true,
             parser: new LekMangaParser(),
-            bypassPage: `${DOMAIN}/?s=&post_type=wp-manga`,
         });
     }
 }
